@@ -21,14 +21,14 @@ services:
       ports:
         - "5050:80"
    nats:
-    image: nats:latest
-    command: --js --debug --trace --sd /data -p 4222 -m 8222
-    ports:
-    - 4222:4222
-    - 6222:6222
-    - 8222:8222
-    volumes:
-    - ./jetstream-cluster/n1:/data
+      image: nats:latest
+      command: --js --debug --trace --sd /data -p 4222 -m 8222
+      ports:
+      - 4222:4222
+      - 6222:6222
+      - 8222:8222
+      volumes:
+      - ./jetstream-cluster/n1:/data
 
   prometheus-nats-exporter:
     image: natsio/prometheus-nats-exporter:latest
