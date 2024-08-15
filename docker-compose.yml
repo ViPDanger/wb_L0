@@ -20,7 +20,8 @@ services:
         PGADMIN_DEFAULT_PASSWORD: root
       ports:
         - "5050:80"
-   nats:
+  nats:
+      container_name: nats
       image: nats:latest
       command: --js --debug --trace --sd /data -p 4222 -m 8222
       ports:
@@ -29,22 +30,3 @@ services:
       - 8222:8222
       volumes:
       - ./jetstream-cluster/n1:/data
-
-  prometheus-nats-exporter:
-    image: natsio/prometheus-nats-exporter:latest
-    command: "-connz -varz -channelz -serverz -subz -healthz -routez http://host.docker.internal:8222"
-    ports:
-      - "7777:7777"
-  prometheus:
-    image: prom/prometheus:latest
-    hostname: prometheus
-    volumes:
-      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
-    ports:
-      - "9090:9090"
-
-  grafana:
-    image: grafana/grafana
-    hostname: grafana
-    ports:
-      - "3000:3000"
