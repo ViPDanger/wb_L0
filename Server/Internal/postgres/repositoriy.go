@@ -5,8 +5,6 @@ import (
 	"log"
 	"time"
 
-	//"github.com/ViPDanger/L0/Server/Internal/config"
-	"github.com/ViPDanger/L0/Server/Internal/config"
 	"github.com/ViPDanger/L0/Server/Internal/structures"
 )
 
@@ -128,7 +126,7 @@ func (r *Repository) Delete_Author(id string) error {
 	ctx := context.Background()
 	tx, err := r.client.Begin(ctx)
 	if err != nil {
-		config.Err_log(err)
+		log.Fatalln("")
 		return err
 	}
 	defer tx.Rollback(ctx)
@@ -146,7 +144,7 @@ func (r *Repository) Delete_Content(id string) error {
 	ctx := context.Background()
 	tx, err := r.client.Begin(ctx)
 	if err != nil {
-		config.Err_log(err)
+
 		return err
 	}
 	defer tx.Rollback(ctx)
