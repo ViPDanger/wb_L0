@@ -6,10 +6,7 @@ import (
 	"os"
 )
 
-type Conf struct {
-	Adress          string `json:"adress"`
-	Port            string `json:"port"`
-	Data_File       string `json:"data_file"`
+type cfg struct {
 	PG_host         string `json:"pg_host"`
 	PG_port         string `json:"pg_port"`
 	PG_user         string `json:"pg_user"`
@@ -25,8 +22,8 @@ func Err_log(err error) bool {
 	return false
 }
 
-func Read_Config() Conf {
-	var config Conf
+func Read_Config() cfg {
+	var config cfg
 	data := make([]byte, 1024)
 
 	file, err := os.Open("cmd/config.cfg")

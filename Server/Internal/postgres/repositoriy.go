@@ -5,8 +5,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/ViPDanger/Golang/Internal/config"
-	"github.com/ViPDanger/Golang/Internal/structures"
+	//"github.com/ViPDanger/L0/Server/Internal/config"
+	"github.com/ViPDanger/L0/Server/Internal/config"
+	"github.com/ViPDanger/L0/Server/Internal/structures"
 )
 
 // Описание репозитория клиента

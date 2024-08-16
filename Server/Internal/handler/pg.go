@@ -7,9 +7,9 @@ import (
 	"text/template"
 	"time"
 
-	pg "github.com/ViPDanger/Golang/Internal/postgres"
-	"github.com/ViPDanger/Golang/Internal/structures"
-	t "github.com/ViPDanger/Golang/templates"
+	pg "github.com/ViPDanger/L0/Server/Internal/postgres"
+	"github.com/ViPDanger/L0/Server/Internal/structures"
+	t "github.com/ViPDanger/L0/Server/templates"
 )
 
 func Get(w http.ResponseWriter, r *http.Request) {

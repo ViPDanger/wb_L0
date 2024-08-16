@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"reflect"
 
-	"github.com/ViPDanger/Golang/Internal/structures"
+	"github.com/ViPDanger/L0/Server/Internal/structures"
 )
 
 var templateFuncs = template.FuncMap{"rangeStruct": rangeStructer}

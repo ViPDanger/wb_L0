@@ -9,7 +9,7 @@ services:
         POSTGRES_PASSWORD: root
         POSTGRES_DB: my_db
       volumes:
-      - ./postgres_data:/var/lib/postgresql/data/
+      - ./../L0Docker/postgres_data:/var/lib/postgresql/data/
       ports:
       - "5432:5432"
   pgadmin:
@@ -29,4 +29,4 @@ services:
       - 6222:6222
       - 8222:8222
       volumes:
-      - ./jetstream-cluster/n1:/data
+      - ./../L0Docker/jetstream-cluster/n1:/data
