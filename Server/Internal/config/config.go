@@ -13,6 +13,8 @@ type CFG struct {
 	PG_password  string `json:"pg_password"`
 	PG_bdname    string `json:"pg_bdname"`
 	Con_Attempts int    `json:"max_connection_attempts"`
+	Nats_host    string `json:"nats_host"`
+	Nats_port    string `json:"nats_port"`
 }
 
 func Read_Config() CFG {

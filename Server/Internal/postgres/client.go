@@ -20,8 +20,8 @@ type Client interface {
 func NewClient(ctx context.Context, conf config.CFG) (pool *pgx.Conn, err error) {
 	// urlExample := "postgres://username:password@localhost:5432/database_name"
 	url := "postgres://" + conf.PG_user + ":" + conf.PG_password + "@" + conf.PG_host + ":" + conf.PG_port + "/" + conf.PG_bdname
-	attempts := conf.Con_Attempts
-	for attempts > 0 {
+
+	for attempts := conf.Con_Attempts; attempts > 0; attempts-- {
 		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 		defer cancel()
 		pool, err = pgx.Connect(ctx, url)
@@ -29,7 +29,6 @@ func NewClient(ctx context.Context, conf config.CFG) (pool *pgx.Conn, err error)
 			log.Println("Connecting to Postgres: Server didn't respound")
 			time.Sleep(5 * time.Second)
 		}
-		attempts--
 	}
 	if err != nil {
 		log.Fatalln("Connecting to Postgres: Number of attempts exceeded.")

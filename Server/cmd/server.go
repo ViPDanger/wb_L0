@@ -8,6 +8,7 @@ import (
 	"syscall"
 
 	c "github.com/ViPDanger/L0/Server/Internal/config"
+	"github.com/ViPDanger/L0/Server/Internal/nats"
 	pg "github.com/ViPDanger/L0/Server/Internal/postgres"
 )
 
@@ -19,6 +20,9 @@ func main() {
 		client, _ := pg.NewClient(context.Background(), config)
 		rep := pg.NewRepository(client)
 		if rep != nil {
+		}
+		natsConnection, _ := nats.ConnectToNATS(config)
+		if natsConnection != nil {
 		}
 	}()
 	<-ctx.Done()
