@@ -8,7 +8,7 @@ import (
 	"syscall"
 
 	c "github.com/ViPDanger/L0/Server/Internal/config"
-	"github.com/ViPDanger/L0/Server/Internal/nats"
+	n "github.com/ViPDanger/L0/Server/Internal/nats"
 	pg "github.com/ViPDanger/L0/Server/Internal/postgres"
 )
 
@@ -21,7 +21,7 @@ func main() {
 		rep := pg.NewRepository(client)
 		if rep != nil {
 		}
-		natsConnection, _ := nats.ConnectToNATS(config)
+		natsConnection, _ := n.ConnectToNATS(config)
 		if natsConnection != nil {
 		}
 	}()
