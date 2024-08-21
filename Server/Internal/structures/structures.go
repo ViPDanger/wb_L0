@@ -1,71 +1,57 @@
 package structures
 
-type Get_Page struct {
-	Title            string
-	SearchAllAuthor  string
-	SearchAllContent string
-	SearchAuthorID   string
-	SearchContentID  string
-	InputAuthor      string
-	InputContent     string
-	DeleteAuthorID   string
-	DeleteContentID  string
+type Items struct {
+	Chrt_id      int    `json:"chrt_id"`
+	Track_number string `json:"track_number"`
+	Price        int    `json:"price"`
+	Rid          string `json:"rid"`
+	Name         string `json:"name"`
+	Sale         int    `json:"sale"`
+	Size         string `json:"size"`
+	Total_price  int    `json:"total_price"`
+	Nm_id        int    `json:"nm_id"`
+	Brand        string `json:"brand"`
+	Status       int    `json:"status"`
 }
 
-type items struct {
-	chrt_id      int    `json:"chrt_id"`
-	track_number string `json:"track_number"`
-	price        int    `json:"price"`
-	rid          string `json:"rid"`
-	name         string `json:"name"`
-	sale         int    `json:"sale"`
-	size         int    `json:"size"`
-	total_price  int    `json:"total_price"`
-	nm_id        int    `json:"nm_id"`
-	brand        string `json:"brand"`
-	status       int    `json:"status"`
+type Payment struct {
+	Transaction   string `json:"transaction"`
+	Request_id    string `json:"request_id"`
+	Currency      string `json:"currency"`
+	Provider      string `json:"provider"`
+	Amount        int    `json:"amount"`
+	Payment_dt    int    `json:"payment_dt"`
+	Bank          string `json:"bank"`
+	Delivery_cost int    `json:"delivery_cost"`
+	Goods_total   int    `json:"goods_total"`
+	Custom_fee    int    `json:"custom_fee"`
 }
 
-type payment struct {
-	chrt_id int `json:"chrt_id"`
-
-	transaction   string `json:"transaction"`
-	request_id    string `json:"request_id"`
-	currency      string `json:"currency"`
-	provider      string `json:"provider"`
-	amount        int    `json:"amount"`
-	payment_dt    int    `json:"payment_dt"`
-	bank          string `json:"bank"`
-	delivery_cost int    `json:"delivery_cost"`
-	goods_total   int    `json:"goods_total"`
-	custom_fee    int    `json:"custom_fee"`
+type Delivery struct {
+	Name    string `json:"name"`
+	Phone   string `json:"phone"`
+	Zip     string `json:"zip"`
+	City    string `json:"city"`
+	Address string `json:"address"`
+	Region  string `json:"region"`
+	Email   string `json:"email"`
 }
 
-type delivery struct {
-	name    string `json:"name"`
-	phone   string `json:"phone"`
-	zip     string `json:"zip"`
-	city    string `json:"city"`
-	address string `json:"address"`
-	region  string `json:"region"`
-	email   string `json:"email"`
-}
-
-type order struct {
-	order_uid          string   `json:"order_uid"`
-	track_number       string   `json:"track_number"`
-	entry              string   `json:"entry"`
-	delivery           delivery `json:"delivery"`
-	payment            payment  `json:"payment"`
-	items              []items  `json:"items"`
-	locale             string   `json:"locale"`
-	internal_signature string   `json:"internal_signature"`
-	customer_id        string   `json:"customer_id"`
-	delivery_service   string   `json:"delivery_service"`
-	shardkey           string   `json:"shardkey"`
-	sm_id              int      `json:"sm_id"`
-	date_created       string   `json:"date_created"`
-	oof_shard          string   `json:"entry"`
+type Order struct {
+	Order_uid          string   `json:"order_uid"`
+	Track_number       string   `json:"track_number"`
+	Entry              string   `json:"entry"`
+	Delivery           Delivery `json:"delivery"`
+	Payment            Payment  `json:"payment"`
+	Items              []Items  `json:"items"`
+	Locale             string   `json:"locale"`
+	Internal_signature string   `json:"internal_signature"`
+	Customer_id        string   `json:"customer_id"`
+	Delivery_service   string   `json:"delivery_service"`
+	Shardkey           string   `json:"shardkey"`
+	Sm_id              int      `json:"sm_id"`
+	Date_created       string   `json:"date_created"`
+	Oof_shard          string   `json:"entry"`
 }
 
 type Result_Page struct {

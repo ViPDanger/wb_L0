@@ -6,7 +6,8 @@ require (
 	github.com/ViPDanger/Golang v0.0.0-20240407193518-e5952af4cb51
 	github.com/jackc/pgconn v1.14.3
 	github.com/jackc/pgx/v4 v4.18.3
-	github.com/nats-io/nats.go v1.37.0
+	github.com/nats-io/nats v1.37.0
+	github.com/bluele/gcache v1.2.3
 )
 
 require (
