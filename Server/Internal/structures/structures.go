@@ -1,5 +1,8 @@
 package structures
 
+type Order_uid struct {
+	Order_uid string `json:"order_uid"`
+}
 type Items struct {
 	Chrt_id      int    `json:"chrt_id"`
 	Track_number string `json:"track_number"`

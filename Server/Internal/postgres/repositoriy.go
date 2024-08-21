@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/ViPDanger/L0/Server/Internal/structures"
-	"github.com/nats-io/nats.go"
 )
 
 // Описание репозитория клиента
@@ -12,7 +11,7 @@ type Repository struct {
 	client Client
 }
 
-func NewRepository(client Client, nats *nats.Conn) *Repository {
+func NewRepository(client Client) *Repository {
 	return &Repository{
 		client: client,
 	}
