@@ -18,7 +18,6 @@ import (
 func SetupHttpHandlers(mux *http.ServeMux, cancel_on_http context.CancelFunc, natsHandler NatsHanlder) {
 	mux.Handle("/Shutdown", ShutdownHandler{cancel_on_http: cancel_on_http})
 	mux.HandleFunc("/", DefaultPage)
-	mux.HandleFunc("/Error", ErrorPage)
 	mux.HandleFunc("/response/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		path := r.URL.Path
@@ -28,8 +27,7 @@ func SetupHttpHandlers(mux *http.ServeMux, cancel_on_http context.CancelFunc, na
 			body, err := io.ReadAll(r.Body)
 			body = []byte(strings.TrimPrefix(string(body), "request_uid="))
 			if err != nil || len(body) < 2 {
-				r.Body = io.NopCloser(strings.NewReader("Тело не может быть пустым"))
-				ErrorPage(w, r)
+				ErrorPage(w, r,[]byte("Тело не может быть пустым"))
 				return
 			}
 			body, _ = json.Marshal(&structures.Order_uid{
@@ -44,9 +42,8 @@ func SetupHttpHandlers(mux *http.ServeMux, cancel_on_http context.CancelFunc, na
 
 			body, err := io.ReadAll(r.Body)
 			body = []byte(strings.TrimPrefix(string(body), "request_uid="))
-			if err != nil || len(body) < 2 {
-				r.Body = io.NopCloser(strings.NewReader("Тело не может быть пустым"))
-				ErrorPage(w, r)
+			if err != nil || len(body) < 1 {
+				ErrorPage(w, r,[]byte("Тело не может быть пустым"))
 				return
 			}
 			body, _ = json.Marshal(&structures.Order_uid{
@@ -54,14 +51,12 @@ func SetupHttpHandlers(mux *http.ServeMux, cancel_on_http context.CancelFunc, na
 			})
 			n.PublishMsg(*natsHandler.JetstreamContext, "GetOrder."+natsHandler.ClientName, body)
 			var msg *nats.Msg
-			msg = <-natsHandler.DelChannel
+			msg = <-natsHandler.GetChannel
 			// Форматирование полученного значения
 			var order structures.Order
 			err = json.Unmarshal(msg.Data, order)
-
 			if err != nil {
-				r.Body = io.NopCloser(strings.NewReader(""))
-				ErrorPage(w, r)
+				ErrorPage(w, r,[]byte("Нет Order с "+string(body)))
 			} else {
 				GetResultPage(w, r, order)
 			}
@@ -98,8 +93,7 @@ func DefaultPage(w http.ResponseWriter, r *http.Request) {
 			if err != nil || int < 0 {
 				log.Println("Defaultpage: ", err)
 				int = 1
-				r.Body = io.NopCloser(strings.NewReader("Число Items должно быть натуральным"))
-				ErrorPage(w, r)
+				ErrorPage(w, r,[]byte("Число Items должно быть натуральным"))
 
 			}
 		}
@@ -116,7 +110,7 @@ func DefaultPage(w http.ResponseWriter, r *http.Request) {
 	}
 	t.Execute(w, &page)
 }
-func ErrorPage(w http.ResponseWriter, r *http.Request) {
+func ErrorPage(w http.ResponseWriter, r *http.Request,data []byte) {
 	w.Header().Set("Content-type", "text/html")
 	t, err := template.ParseFiles("./Client/templates/error.html")
 	if err != nil {
@@ -125,13 +119,9 @@ func ErrorPage(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Failed to parse files"))
 		return
 	}
-	bytes, err := io.ReadAll(r.Body)
-	if err != nil {
-		bytes = append(bytes, []byte("\n Error Body is NULL!")...)
-	}
 	page := structures.ErrorPage{
 		Title:        "Error",
-		ErrorMessage: string(bytes),
+		ErrorMessage: string(data),
 	}
 	t.Execute(w, &page)
 }
@@ -141,7 +131,7 @@ func PutOrder(w http.ResponseWriter, r *http.Request) {
 }
 func DelResultPage(w http.ResponseWriter, r *http.Request, data []byte) {
 	w.Header().Set("Content-type", "text/html")
-	t, err := template.ParseFiles("./Client/templates/delrequest.html")
+	t, err := template.ParseFiles("./Client/templates/delresult.html")
 	if err != nil {
 		log.Println("Template:", err)
 		w.WriteHeader(http.StatusInternalServerError)
