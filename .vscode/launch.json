@@ -1,7 +1,13 @@
 {
-   
     "version": "0.2.0",
     "configurations": [
+        {
+            "name": "Launch Client",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "Client/cmd/client.go"
+        },
         {
             "name": "Launch Server",
             "type": "go",

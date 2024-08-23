@@ -54,7 +54,7 @@ type Order struct {
 	Shardkey           string   `json:"shardkey"`
 	Sm_id              int      `json:"sm_id"`
 	Date_created       string   `json:"date_created"`
-	Oof_shard          string   `json:"entry"`
+	Oof_shard          string   `json:"oof_shard"`
 }
 
 type Result_Page struct {

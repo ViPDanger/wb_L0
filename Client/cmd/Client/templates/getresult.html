@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	<meta charset="utf-8">
+	<title>{{.Title}}</title>
+	    </head>
+	    <body>
+            <table border="1" cellpadding="5" cellspacing="5">
+                <tr>
+                    <form id = Order>
+						
+			
+						<tr><p><input type="text" name=".Order.Order_uid" value={{.Order.Order_uid}}><td>  order_uid</td></p></tr>
+						<tr><p><input type="text" name=".Order.Track_number" value={{.Order.Track_number}}><td> track_number</td></p></tr>  
+						<tr><p><input type="text" name=".Order.Entry" value={{.Order.Entry}}><td>    entry</td></p></tr>
+						<tr><p><input type="text" name=".Order.Locale" value={{.Order.Locale}}><td>    locale</td></p></tr>
+						<tr><p><input type="text" name=".Order.Internal_signature" value={{.Order.Internal_signature}}><td>    internal_signature</td></p></tr>
+						<tr><p><input type="text" name=".Order.Customer_id" value={{.Order.Customer_id}}><td>    customer_id</td></p></tr>
+						<tr><p><input type="text" name=".Order.Delivery_service" value={{.Order.Delivery_service}}><td>    delivery_service</td></p></tr>
+						<tr><p><input type="text" name=".Order.Shardkey" value={{.Order.Shardkey}}><td>    shardkey</td></p></tr>
+						<tr><p><input type="text" name=".Order.Sm_id" value={{.Order.Sm_id}}><td>    sm_id</td></p></tr>
+						<tr><p><input type="text" name=".Order.Date_created" value={{.Order.Date_created}}><td>    date_created</td></p></tr>
+						<tr><p><input type="text" name=".Order.Oof_shard" value={{.Order.Oof_shard}}><td>    oof_shard</td></p></tr>
+						
+						<p>"Delivery"</p>
+						<tr>
+							<p><td>        </td><input type="text" name=".Order.Delivery.Name" value={{.Order.Delivery.Name}}><td>  name</td></p>
+							<p><td>        </td><input type="text" name=".Order.Delivery.Phone" value={{.Order.Delivery.Phone}}><td>  phone</td></p>
+							<p><td>        </td><input type="text" name=".Order.Delivery.Zip" value={{.Order.Delivery.Zip}}><td>  zip</td></p>
+							<p><td>        </td><input type="text" name=".Order.Delivery.City" value={{.Order.Delivery.City}}><td>  city</td></p>
+							<p><td>        </td><input type="text" name=".Order.Delivery.Address" value={{.Order.Delivery.Address}}><td>  address</td></p>
+							<p><td>        </td><input type="text" name=".Order.Delivery.Region" value={{.Order.Delivery.Region}}><td>  region</td></p>
+							<p><td>        </td><input type="text" name=".Order.Delivery.Email" value={{.Order.Delivery.Email}}><td>  email</td></p>
+						</tr>
+						<p>"Payment"</p>
+						<tr>
+							
+							<p><td>        </td><input type="text" name=".Order.Payment.Transaction" value={{.Order.Payment.Transaction}}><td>  transaction</td></p>
+							<p><td>        </td><input type="text" name=".Order.Payment.Request_id" value={{.Order.Payment.Request_id}}><td>  request_id</td></p>
+							<p><td>        </td><input type="text" name=".Order.Payment.Currency" value={{.Order.Payment.Currency}}><td>  currency</td></p>
+							<p><td>        </td><input type="text" name=".Order.Payment.Provider" value={{.Order.Payment.Provider}}><td>  provider</td></p>
+							<p><td>        </td><input type="text" name=".Order.Payment.Amount" value={{.Order.Payment.Amount}}><td>  amount</td></p>
+							<p><td>        </td><input type="text" name=".Order.Payment.Payment_dt" value={{.Order.Payment.Payment_dt}}><td>  payment_dt</td></p>
+							<p><td>        </td><input type="text" name=".Order.Payment.Bank" value={{.Order.Payment.Bank}}><td>  bank</td></p>
+							<p><td>        </td><input type="text" name=".Order.Payment.Delivery_cost" value={{.Order.Payment.Delivery_cost}}><td>  delivery_cost</td></p>
+							<p><td>        </td><input type="text" name=".Order.Payment.Goods_total" value={{.Order.Payment.Goods_total}}><td>  goods_total</td></p>
+							<p><td>        </td><input type="text" name=".Order.Payment.Custom_fee" value={{.Order.Payment.Custom_fee}}><td>  custom_fee</td></p>
+						</tr> 
+						
+						{{ range $key, $monkey := .Order.Items }}
+						<div>
+							<p>"Item {{ $key }}"</p>
+							<p><td>        </td><input type="text" name=".Order.Items[{{ $key }}].Chrt_id" value={{}}><td>  chrt_id</td></p>
+							<p><td>        </td><input type="text" name=".Order.Items[{{ $key }}].Track_number" value={{}}><td>  track_number</td></p>
+							<p><td>        </td><input type="text" name=".Order.Items[{{ $key }}].Price" value={{}}><td>  price</td></p>
+							<p><td>        </td><input type="text" name=".Order.Items[{{ $key }}].Rid" value={{}}><td>  rid</td></p>
+							<p><td>        </td><input type="text" name=".Order.Items[{{ $key }}].Name" value={{}}><td>  name</td></p>
+							<p><td>        </td><input type="text" name=".Order.Items[{{ $key }}].Sale" value={{}}><td>  sale</td></p>
+							<p><td>        </td><input type="text" name=".Order.Items[{{ $key }}].Size" value={{}}><td>  size</td></p>
+							<p><td>        </td><input type="text" name=".Order.Items[{{ $key }}].Total_price" value={{}}><td>  total_price</td></p>
+							<p><td>        </td><input type="text" name=".Order.Items[{{ $key }}].Nm_id" value={{}}><td>  nm_id</td></p>
+							<p><td>        </td><input type="text" name=".Order.Items[{{ $key }}].Brand" value={{}}><td>  brand</td></p>
+							<p><td>        </td><input type="text" name=".Order.Items[{{ $key }}].Status" value={{}}><td>  status</td></p>
+						</div>
+						{{ end }}
+						
+					</form>
+                </tr>
+            </table>
+
+			<form action="/" method="post">
+				<input type="submit" name="" value= "Вернуться назад:">
+			</form>
+    </body>
+  </html>

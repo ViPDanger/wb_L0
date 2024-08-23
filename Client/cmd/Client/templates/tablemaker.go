@@ -5,11 +5,8 @@ package templates
 
 import (
 	"html/template"
-	"log"
 	"net/http"
 	"reflect"
-
-	"github.com/ViPDanger/L0/Server/Internal/structures"
 )
 
 var templateFuncs = template.FuncMap{"rangeStruct": rangeStructer}
@@ -43,36 +40,42 @@ var htmlTemplate = `<!DOCTYPE html>
 	</body>
 </html>`
 
-func TableMaker(w http.ResponseWriter, Title string, First_Line []string, data any) {
+func TablemakerAddItem() {
+
+}
+
+func Tablemaker(w http.ResponseWriter, Title string, First_Line []string, data any) {
 
 	// We create the template and register out template function
-	var err error
-	t := template.New("template").Funcs(templateFuncs)
-	t, err = t.Parse(htmlTemplate)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("Failed to parse files"))
-		log.Println(err)
-		return
+	/*
+		var err error
+		t := template.New("template").Funcs(templateFuncs)
+		t, err = t.Parse(htmlTemplate)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Failed to parse files"))
+			log.Println(err)
+			return
 
-	}
-	page := structures.Result_Page{
-		Title:      Title,
-		First_Line: First_Line,
-		BackButton: "Вернуться Назад",
-	}
-	if reflect.ValueOf(data).Kind() == reflect.Slice {
-		page.Data = data
-	} else {
-		page.Data = append([]any{}, data)
-	}
-	err = t.Execute(w, page)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("ERR NO EXECUTE FILE"))
-		log.Println(err)
-		return
-	}
+		}
+		page := structures.ResultPage{
+			Title:      Title,
+			First_Line: First_Line,
+			BackButton: "Вернуться Назад",
+		}
+		if reflect.ValueOf(data).Kind() == reflect.Slice {
+			page.Data = data
+		} else {
+			page.Data = append([]any{}, data)
+		}
+		err = t.Execute(w, page)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("ERR NO EXECUTE FILE"))
+			log.Println(err)
+			return
+		}
+	*/
 }
 
 // RangeStructer takes the first argument, which must be a struct, and
