@@ -41,8 +41,8 @@ func (r *Repository) PutOrder(order structures.Order) error {
 		return err
 	}
 	// таблица payment
-	query = "insert into wb_schema.payment (order_uid,request_id,currency,provider,amount,payment_dt,bank,delivery_cost,goods_total,custom_fee) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)"
-	_, err = tx.Exec(ctx, query, order.Order_uid, order.Payment.Request_id, order.Payment.Currency, order.Payment.Provider, order.Payment.Amount, order.Payment.Payment_dt, order.Payment.Bank, order.Payment.Delivery_cost, order.Payment.Goods_total, order.Payment.Custom_fee)
+	query = "insert into wb_schema.payment (order_uid,transaction,request_id,currency,provider,amount,payment_dt,bank,delivery_cost,goods_total,custom_fee) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)"
+	_, err = tx.Exec(ctx, query, order.Order_uid, order.Payment.Transaction, order.Payment.Request_id, order.Payment.Currency, order.Payment.Provider, order.Payment.Amount, order.Payment.Payment_dt, order.Payment.Bank, order.Payment.Delivery_cost, order.Payment.Goods_total, order.Payment.Custom_fee)
 	if err != nil {
 		return err
 	}
@@ -78,8 +78,8 @@ func (r *Repository) GetOrder(order_uid string) (structures.Order, error) {
 		return order, errors.New("No Delivery with order_uid: " + order_uid + " in base")
 	}
 	// таблица payment
-	query = "SELECT order_uid,request_id,currency,provider,amount,payment_dt,bank,delivery_cost,goods_total,custom_fee FROM wb_schema.payment WHERE order_uid = $1"
-	err = r.client.QueryRow(context.Background(), query, order_uid).Scan(&order.Order_uid, &order.Payment.Request_id, &order.Payment.Currency, &order.Payment.Provider, &order.Payment.Amount, &order.Payment.Payment_dt, &order.Payment.Bank, &order.Payment.Delivery_cost, &order.Payment.Goods_total, &order.Payment.Custom_fee)
+	query = "SELECT order_uid,transaction,request_id,currency,provider,amount,payment_dt,bank,delivery_cost,goods_total,custom_fee FROM wb_schema.payment WHERE order_uid = $1"
+	err = r.client.QueryRow(context.Background(), query, order_uid).Scan(&order.Order_uid, &order.Payment.Transaction, &order.Payment.Request_id, &order.Payment.Currency, &order.Payment.Provider, &order.Payment.Amount, &order.Payment.Payment_dt, &order.Payment.Bank, &order.Payment.Delivery_cost, &order.Payment.Goods_total, &order.Payment.Custom_fee)
 	if err != nil {
 		return order, errors.New("No Payment with order_uid: " + order_uid + " in base")
 	}

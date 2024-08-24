@@ -24,20 +24,20 @@
             <input type="text" name="ItemCount"   value=><td>  Кол-во Items</div></td>
         </div>
         </form>
-        <form action="/response/" method="post">
+        <form action="/response/Put" method="post">
             <p>"Order"</p>
 
-            <tr><p><input type="text" name=".Order.Order_uid" value={{.Order.Order_uid}}><td>  order_uid</td></p></tr>
-            <tr><p><input type="text" name=".Order.Track_number" value={{.Order.Track_number}}><td> track_number</td></p></tr>  
-            <tr><p><input type="text" name=".Order.Entry" value={{.Order.Entry}}><td>    entry</td></p></tr>
-            <tr><p><input type="text" name=".Order.Locale" value={{.Order.Locale}}><td>    locale</td></p></tr>
-            <tr><p><input type="text" name=".Order.Internal_signature" value={{.Order.Internal_signature}}><td>    internal_signature</td></p></tr>
-            <tr><p><input type="text" name=".Order.Customer_id" value={{.Order.Customer_id}}><td>    customer_id</td></p></tr>
-            <tr><p><input type="text" name=".Order.Delivery_service" value={{.Order.Delivery_service}}><td>    delivery_service</td></p></tr>
-            <tr><p><input type="text" name=".Order.Shardkey" value={{.Order.Shardkey}}><td>    shardkey</td></p></tr>
-            <tr><p><input type="text" name=".Order.Sm_id" value={{.Order.Sm_id}}><td>    sm_id</td></p></tr>
-            <tr><p><input type="text" name=".Order.Date_created" value={{.Order.Date_created}}><td>    date_created</td></p></tr>
-            <tr><p><input type="text" name=".Order.Oof_shard" value={{.Order.Oof_shard}}><td>    oof_shard</td></p></tr>
+            <tr><p><input type="text" name="Order_uid" value={{.Order.Order_uid}}><td>  order_uid</td></p></tr>
+            <tr><p><input type="text" name="Track_number" value={{.Order.Track_number}}><td> track_number</td></p></tr>  
+            <tr><p><input type="text" name="Entry" value={{.Order.Entry}}><td>    entry</td></p></tr>
+            <tr><p><input type="text" name="Locale" value={{.Order.Locale}}><td>    locale</td></p></tr>
+            <tr><p><input type="text" name="Internal_signature" value={{.Order.Internal_signature}}><td>    internal_signature</td></p></tr>
+            <tr><p><input type="text" name="Customer_id" value={{.Order.Customer_id}}><td>    customer_id</td></p></tr>
+            <tr><p><input type="text" name="Delivery_service" value={{.Order.Delivery_service}}><td>    delivery_service</td></p></tr>
+            <tr><p><input type="text" name="Shardkey" value={{.Order.Shardkey}}><td>    shardkey</td></p></tr>
+            <tr><p><input type="text" name="Sm_id" value={{.Order.Sm_id}}><td>    sm_id</td></p></tr>
+            <tr><p><input type="text" name="Date_created" value={{.Order.Date_created}}><td>    date_created</td></p></tr>
+            <tr><p><input type="text" name="Oof_shard" value={{.Order.Oof_shard}}><td>    oof_shard</td></p></tr>
             
             <p>"Delivery"</p>
             <tr>
@@ -67,7 +67,7 @@
             {{ range $key, $item := .Order.Items }}
             <div>
                 <p>"Item"</p>
-                <p><td>        </td><input type="text" name="Items.Chrt_id" value={{$item.}}><td>  chrt_id</td></p>
+                <p><td>        </td><input type="text" name="Items.Chrt_id" value={{$item.Chrt_id}}><td>  chrt_id</td></p>
                 <p><td>        </td><input type="text" name="Items.Track_number" value={{$item.Track_number}}><td>  track_number</td></p>
                 <p><td>        </td><input type="text" name="Items.Price" value={{$item.Price}}><td>  price</td></p>
                 <p><td>        </td><input type="text" name="Items.Rid" value={{$item.Rid}}><td>  rid</td></p>

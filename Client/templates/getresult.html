@@ -10,15 +10,17 @@
 			<p>"Order"</p>
             <table border="1" cellpadding="5" cellspacing="5">
 				<tr>
-					<td>  order_uid</td>
-					<td> track_number</td>
-					<td>    internal_signature</td>
-					<td>    customer_id</td>
-					<td>    delivery_service</td>
-					<td>    shardkey</td>
-					<td>    sm_id</td>
-					<td>    date_created</td>
-					<td>    oof_shard</td>
+					<td>order_uid</td>
+					<td>track_number</td>
+					<td>entry</td>
+					<td>locale</td>
+					<td>internal_signature</td>
+					<td>customer_id</td>
+					<td>delivery_service</td>
+					<td>shardkey</td>
+					<td>sm_id</td>
+					<td>date_created</td>
+					<td>oof_shard</td>
 				</tr>
 				<tr>
 					<td>{{.Order.Order_uid}}</td>
@@ -63,6 +65,7 @@
 					<td>  provider</td>
 					<td>  amount</td>
 					<td>  payment_dt</td>
+					<td>  bank</td>	
 					<td>  delivery_cost</td>
 					<td>  goods_total</td>
 					<td>  custom_fee</td>
@@ -88,12 +91,12 @@
 					<tr>
 						<td>  chrt_id</td>
 						<td>  track_number</td>
-						<td>  total_price</td>
 						<td>  price</td>
 						<td>  rid</td>
 						<td>  name</td>
 						<td>  sale</td>
 						<td>  size</td>
+						<td>  total_price</td>
 						<td>  nm_id</td>
 						<td>  brand</td>
 						<td>  status</td>

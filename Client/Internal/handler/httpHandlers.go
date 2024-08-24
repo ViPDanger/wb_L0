@@ -115,7 +115,7 @@ func SetupHttpHandlers(mux *http.ServeMux, cancel_on_http context.CancelFunc, na
 
 func DefaultPage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "text/html")
-	t, err := template.ParseFiles("../templates/default.html")
+	t, err := template.ParseFiles("./Client/templates/default.html")
 	if err != nil {
 		log.Println("Template:", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -196,7 +196,7 @@ func DefaultPage(w http.ResponseWriter, r *http.Request) {
 }
 func errorPage(w http.ResponseWriter, r *http.Request, errors error) {
 	w.Header().Set("Content-type", "text/html")
-	t, err := template.ParseFiles("../templates/error.html")
+	t, err := template.ParseFiles("./Client/templates/error.html")
 	if err != nil {
 		log.Println("Template:", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -211,7 +211,7 @@ func errorPage(w http.ResponseWriter, r *http.Request, errors error) {
 }
 func putResultPage(w http.ResponseWriter, r *http.Request, data []byte) {
 	w.Header().Set("Content-type", "text/html")
-	t, err := template.ParseFiles("../templates/delresult.html")
+	t, err := template.ParseFiles("./Client/templates/delresult.html")
 	if err != nil {
 		log.Println("Template:", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -227,7 +227,7 @@ func putResultPage(w http.ResponseWriter, r *http.Request, data []byte) {
 }
 func getResultPage(w http.ResponseWriter, r *http.Request, order structures.Order) {
 	w.Header().Set("Content-type", "text/html")
-	t, err := template.ParseFiles("../templates/getresult.html")
+	t, err := template.ParseFiles("./Client/templates/getresult.html")
 	if err != nil {
 		log.Println("Template:", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -242,7 +242,7 @@ func getResultPage(w http.ResponseWriter, r *http.Request, order structures.Orde
 }
 func delResultPage(w http.ResponseWriter, r *http.Request, data []byte) {
 	w.Header().Set("Content-type", "text/html")
-	t, err := template.ParseFiles("../templates/delresult.html")
+	t, err := template.ParseFiles("./Client/templates/delresult.html")
 	if err != nil {
 		log.Println("Template:", err)
 		w.WriteHeader(http.StatusInternalServerError)

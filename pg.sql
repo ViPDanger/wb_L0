@@ -38,6 +38,7 @@ CONSTRAINT fk_order
 CREATE TABLE payment
 (
 order_uid varchar(50)  NOT NULL,
+transaction varchar(50) NOT NULL,
 request_id varchar(50),
 currency varchar(10) NOT NULL,
 provider varchar(50) NOT NULL,
