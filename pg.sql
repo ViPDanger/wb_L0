@@ -1,4 +1,3 @@
-/*
 SET search_path TO wb_schema;
 DROP TABLE IF EXISTS order_item;
 DROP TABLE IF EXISTS delivery;
