@@ -119,7 +119,7 @@ func Subscribe(ctx context.Context, js nats.JetStreamContext, subject, consumerG
 func FetchOne(ctx context.Context, pullSub *nats.Subscription) (*nats.Msg, error) {
 	msgs, err := pullSub.Fetch(1, nats.Context(ctx))
 	if err != nil {
-		if err.Error() != "context deadline exceeded" {
+		if err.Error() != "context deadline exceeded" && err.Error() != "context canceled" {
 			log.Println("Jetstream fetch:", err)
 		}
 		return nil, err

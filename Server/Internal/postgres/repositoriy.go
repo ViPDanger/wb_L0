@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"context"
+	"errors"
 
 	"github.com/ViPDanger/L0/Server/Internal/structures"
 )
@@ -68,24 +69,24 @@ func (r *Repository) GetOrder(order_uid string) (structures.Order, error) {
 	query := "SELECT order_uid,track_number,entry,locale,internal_signature,customer_id,delivery_service,shardkey,sm_id,CONCAT(TO_CHAR(date_created,'YYYY-MM-DDT'),TO_CHAR(date_created,'HH24:MM:SSZ')) as date_created,oof_shard FROM wb_schema.orders WHERE order_uid = $1"
 	err := r.client.QueryRow(context.Background(), query, order_uid).Scan(&order.Order_uid, &order.Track_number, &order.Entry, &order.Locale, &order.Internal_signature, &order.Customer_id, &order.Delivery_service, &order.Shardkey, &order.Sm_id, &order.Date_created, &order.Oof_shard)
 	if err != nil {
-		return order, err
+		return order, errors.New("No Order with order_uid: " + order_uid + " in base")
 	}
 	// таблица delivery
 	query = "SELECT order_uid,name,phone,zip,city,address,region,email FROM wb_schema.delivery WHERE order_uid = $1"
 	err = r.client.QueryRow(context.Background(), query, order_uid).Scan(&order.Order_uid, &order.Delivery.Name, &order.Delivery.Phone, &order.Delivery.Zip, &order.Delivery.City, &order.Delivery.Address, &order.Delivery.Region, &order.Delivery.Email)
 	if err != nil {
-		return order, err
+		return order, errors.New("No Delivery with order_uid: " + order_uid + " in base")
 	}
 	// таблица payment
 	query = "SELECT order_uid,request_id,currency,provider,amount,payment_dt,bank,delivery_cost,goods_total,custom_fee FROM wb_schema.payment WHERE order_uid = $1"
 	err = r.client.QueryRow(context.Background(), query, order_uid).Scan(&order.Order_uid, &order.Payment.Request_id, &order.Payment.Currency, &order.Payment.Provider, &order.Payment.Amount, &order.Payment.Payment_dt, &order.Payment.Bank, &order.Payment.Delivery_cost, &order.Payment.Goods_total, &order.Payment.Custom_fee)
 	if err != nil {
-		return order, err
+		return order, errors.New("No Payment with order_uid: " + order_uid + " in base")
 	}
 	query = "SELECT items.chrt_id,track_number,price,rid,name,sale,size,total_price,nm_id,brand,status FROM wb_schema.items INNER JOIN wb_schema.order_item ON order_item.chrt_id = items.chrt_id WHERE order_uid = $1"
 	rows, err := r.client.Query(context.Background(), query, order_uid)
 	if err != nil {
-		return order, err
+		return order, errors.New("No Items with order_uid: " + order_uid + " in base")
 	}
 	defer rows.Close()
 	// таблицы items и order_item)
@@ -99,8 +100,42 @@ func (r *Repository) GetOrder(order_uid string) (structures.Order, error) {
 	return order, err
 }
 
+// Выдача всех существующих order_id
+func (r *Repository) AllOrder_uid() (structures.OrderuidList, error) {
+	var orderuidList structures.OrderuidList
+	// таблица orders
+	query := "SELECT order_uid from wb_schema.orders"
+	rows, err := r.client.Query(context.Background(), query)
+	if err != nil {
+		return orderuidList, err
+	}
+	defer rows.Close()
+	//
+	orderuidList.List = make([]string, 0)
+	var order_uid string
+	for i := 0; rows.Next(); i++ {
+		err = rows.Scan(&order_uid)
+		if err != nil {
+			return orderuidList, err
+		}
+		orderuidList.List = append(orderuidList.List, order_uid)
+	}
+	return orderuidList, err
+}
+
 // Удаление заказа из PG
 func (r *Repository) DeleteOrder(order_uid string) error {
+	// поиск orders
+	query := "SELECT order_uid FROM wb_schema.orders WHERE order_uid = $1"
+	row, err := r.client.Query(context.Background(), query, order_uid)
+	if err != nil {
+		return err
+	}
+	defer row.Close()
+	if !row.Next() {
+		return errors.New("No Order with order_uid: " + order_uid + " in base")
+	}
+	row.Close()
 	ctx := context.Background()
 	tx, err := r.client.Begin(ctx)
 	if err != nil {
@@ -108,7 +143,7 @@ func (r *Repository) DeleteOrder(order_uid string) error {
 	}
 	defer tx.Rollback(ctx)
 	//  поиск и удаление items связанных с order_item
-	query := "DELETE FROM wb_schema.items USING wb_schema.order_item WHERE items.chrt_id = order_item.chrt_id AND order_item.order_uid = $1"
+	query = "DELETE FROM wb_schema.items USING wb_schema.order_item WHERE items.chrt_id = order_item.chrt_id AND order_item.order_uid = $1"
 	_, err = tx.Exec(ctx, query, order_uid)
 	if err != nil {
 		return err

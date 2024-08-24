@@ -39,17 +39,7 @@ func NatsJetStream(nc *nats.Conn) (nats.JetStreamContext, error) {
 	log.Println("Jetstream: Successfully ")
 	return jsCtx, nil
 }
-func ClearStream(jsCtx nats.JetStreamContext, subjectName string) error {
-	streamName, err := jsCtx.StreamNameBySubject(subjectName)
-	if err != nil {
-		log.Println("Jetstream delete stream by subject", subjectName, ": ", err)
-	}
-	err = jsCtx.DeleteStream(streamName)
-	if err == nil {
-		log.Println("Jetstream delete stream ", streamName, ": Successfully")
-	}
-	return err
-}
+
 func CreateStream(ctx context.Context, jsCtx nats.JetStreamContext, StreamName string, subjects []string) (*nats.StreamInfo, error) {
 	err := jsCtx.DeleteStream(StreamName)
 	if err == nil {
@@ -119,7 +109,7 @@ func Subscribe(ctx context.Context, js nats.JetStreamContext, subject, consumerG
 func FetchOne(ctx context.Context, pullSub *nats.Subscription) (*nats.Msg, error) {
 	msgs, err := pullSub.Fetch(1, nats.Context(ctx))
 	if err != nil {
-		if err.Error() != "context deadline exceeded" {
+		if err.Error() != "context deadline exceeded" && err.Error() != "context canceled" {
 			log.Println("Jetstream fetch:", err)
 		}
 		return nil, err

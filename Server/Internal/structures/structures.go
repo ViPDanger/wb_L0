@@ -1,5 +1,9 @@
 package structures
 
+type OrderuidList struct {
+	List []string `json:"list"`
+}
+
 type Order_uid struct {
 	Order_uid string `json:"order_uid"`
 }

@@ -8,6 +8,8 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/bluele/gcache"
 )
 
 type HttpClient struct {
@@ -15,14 +17,14 @@ type HttpClient struct {
 }
 
 // Запуск http Клиента
-func (s *HttpClient) Run(addres string, port string, natsHandler NatsHanlder) error {
+func (s *HttpClient) Run(addres string, port string, natsHandler NatsHanlder, cache *gcache.Cache) error {
 	// Отстройка параметров
 	ctx_HTTP_Shutdown, cancel_on_http := context.WithCancel(context.Background())
 	ctx, stop := signal.NotifyContext(ctx_HTTP_Shutdown, os.Interrupt, os.Kill, syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
 	mux := http.NewServeMux()
-	SetupHttpHandlers(mux, cancel_on_http, natsHandler)
+	SetupHttpHandlers(mux, cancel_on_http, natsHandler, cache)
 	s.httpServer = &http.Server{
 		Addr:           addres + ":" + port,
 		Handler:        mux,
@@ -37,9 +39,8 @@ func (s *HttpClient) Run(addres string, port string, natsHandler NatsHanlder) er
 			log.Fatalf("Fatal Error: %v", err)
 		}
 	}()
-	time.Sleep(1 * time.Second)
-	log.Print("Sever starter on addres: ", s.httpServer.Addr)
 
+	log.Print("Sever starter on addres: ", s.httpServer.Addr)
 	// Выключение сервера
 	<-ctx.Done()
 	log.Println("Shutting down")
