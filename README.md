@@ -1,5 +1,7 @@
 # Тестовый сервис и приложение клиента на REST API для выполнения задания L0 Горутиновый Голэнг Wildberries
 
+Основная суть задания - создать цепочу запросов Клиент -> NATSJetstream -> Сервер -> PostgreSQL -> Сервер -> NATSJetstream -> Клиент
+
 Конфиги с основными настройками NATs jetstream и прослушеваемых портов лежат по пути
 Server/cmd/config.cfg
 Client/cmd/config.cfg
